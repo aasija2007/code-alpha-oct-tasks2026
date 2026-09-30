@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="ocean">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CalcPro — Production-grade Smart Calculator with Scientific Mode, Unit Converter, Calculation History, and Keyboard Support.">
+  <meta name="theme-color" content="#0f172a">
+  <title>CalcPro — Smart Calculator</title>
+  
+  <!-- Web App PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2338bdf8'/><text x='50' y='65' font-size='50' font-family='sans-serif' font-weight='bold' text-anchor='middle' fill='white'>%2B</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- MAIN CALCULATOR CARD -->
+    <main class="calc-card" id="calcCard" aria-label="Smart Calculator Application">
+      
+      <!-- HEADER CONTROLS -->
+      <header class="header-bar">
+        <nav class="nav-tabs" aria-label="Mode Navigation">
+          <button class="tab-btn active" id="tabCalc" aria-selected="true">Calculator</button>
+          <button class="tab-btn" id="tabConverter" aria-selected="false">Converter</button>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn" data-action="sci-toggle" title="Toggle Scientific Keypad" aria-label="Toggle Scientific Keypad">🧪</button>
+          <button class="icon-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme" aria-label="Toggle Light/Dark Theme">☀️</button>
+          <button class="icon-btn" id="btnOpenSettings" title="Settings" aria-label="Open Settings">⚙</button>
+          <button class="icon-btn" id="btnOpenHelp" title="Keyboard Shortcuts (?)" aria-label="Keyboard Shortcuts">?</button>
+        </div>
+      </header>
+
+      <!-- DISPLAY SECTION -->
+      <section class="display-container" id="displayContainer" title="Click to copy result" aria-live="polite">
+        <div class="display-header-info">
+          <div class="indicators">
+            <span class="indicator-badge" id="memoryBadge" style="display: none;">M</span>
+            <span class="indicator-badge bracket-badge" id="bracketBadge" style="display: none;">0 open</span>
+          </div>
+          <span style="font-size: 0.7rem; opacity: 0.7;">CalcPro v1.0</span>
+        </div>
+        <div class="expression-line" id="expressionLine"></div>
+        <div class="main-result-line" id="mainResultLine">0</div>
+      </section>
+
+      <!-- CALCULATOR VIEW -->
+      <div id="viewCalculator" class="calculator-body">
+
+        <!-- SCIENTIFIC EXPANDABLE PANEL -->
+        <div class="scientific-panel" id="scientificPanel" aria-label="Scientific Keypad">
+          <button class="calc-btn btn-func" data-action="deg-rad" id="degRadToggle" title="Toggle Degree / Radian">DEG</button>
+          <button class="calc-btn btn-func" data-val="sin(">sin</button>
+          <button class="calc-btn btn-func" data-val="cos(">cos</button>
+          <button class="calc-btn btn-func" data-val="tan(">tan</button>
+          <button class="calc-btn btn-func" data-val="log(">log</button>
+          <button class="calc-btn btn-func" data-val="ln(">ln</button>
+          <button class="calc-btn btn-func" data-val="√(">√</button>
+          <button class="calc-btn btn-func" data-action="sqr">x²</button>
+          <button class="calc-btn btn-func" data-val="^">xʸ</button>
+          <button class="calc-btn btn-func" data-val="π">π</button>
+          <button class="calc-btn btn-func" data-val="e">e</button>
+          <button class="calc-btn btn-func" data-val="!">n!</button>
+          <button class="calc-btn btn-func" data-action="recip">1/x</button>
+          <button class="calc-btn btn-func" data-val="(">(</button>
+          <button class="calc-btn btn-func" data-val=")">)</button>
+        </div>
+
+        <!-- STANDARD KEYPAD -->
+        <div class="standard-keypad">
+          <!-- MEMORY ROW -->
+          <div class="memory-row">
+            <button class="calc-btn btn-mem" data-action="mc">MC</button>
+            <button class="calc-btn btn-mem" data-action="mr">MR</button>
+            <button class="calc-btn btn-mem" data-action="m-plus">M+</button>
+            <button class="calc-btn btn-mem" data-action="m-minus">M−</button>
+            <button class="calc-btn btn-mem" data-val="(">(</button>
+          </div>
+
+          <!-- MAIN GRID -->
+          <div class="main-keypad">
+            <button class="calc-btn btn-func btn-clear" data-action="clear-all">AC</button>
+            <button class="calc-btn btn-func" data-action="clear-entry">CE</button>
+            <button class="calc-btn btn-func" data-action="backspace">⌫</button>
+            <button class="calc-btn btn-op" data-val="÷">÷</button>
+
+            <button class="calc-btn btn-num" data-val="7">7</button>
+            <button class="calc-btn btn-num" data-val="8">8</button>
+            <button class="calc-btn btn-num" data-val="9">9</button>
+            <button class="calc-btn btn-op" data-val="×">×</button>
+
+            <button class="calc-btn btn-num" data-val="4">4</button>
+            <button class="calc-btn btn-num" data-val="5">5</button>
+            <button class="calc-btn btn-num" data-val="6">6</button>
+            <button class="calc-btn btn-op" data-val="-">−</button>
+
+            <button class="calc-btn btn-num" data-val="1">1</button>
+            <button class="calc-btn btn-num" data-val="2">2</button>
+            <button class="calc-btn btn-num" data-val="3">3</button>
+            <button class="calc-btn btn-op" data-val="+">+</button>
+
+            <button class="calc-btn btn-func" data-action="toggle-sign">±</button>
+            <button class="calc-btn btn-num" data-val="0">0</button>
+            <button class="calc-btn btn-num" data-val=".">.</button>
+            <button class="calc-btn btn-equals" data-action="equals">=</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONVERTER TAB VIEW -->
+      <div id="viewConverter" class="converter-container">
+        <div class="converter-group">
+          <label class="converter-label" for="converterCategory">Category</label>
+          <select id="converterCategory" class="converter-select"></select>
+        </div>
+
+        <div class="converter-group">
+          <label class="converter-label" for="converterInputFrom">From</label>
+          <input type="number" id="converterInputFrom" class="converter-input" value="1" placeholder="Enter value">
+          <select id="converterFromUnit" class="converter-select" style="margin-top: 6px;"></select>
+        </div>
+
+        <button id="converterSwap" class="converter-swap-btn" title="Swap Units">⇅</button>
+
+        <div class="converter-group">
+          <label class="converter-label" for="converterInputTo">To (Result)</label>
+          <input type="text" id="converterInputTo" class="converter-input" readonly placeholder="Result">
+          <select id="converterToUnit" class="converter-select" style="margin-top: 6px;"></select>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- CALCULATION HISTORY PANEL -->
+    <aside class="history-panel" aria-label="Calculation History">
+      <div class="history-header">
+        <h2 class="history-title">
+          <span>🕒</span> History
+        </h2>
+        <button class="tab-btn" id="btnClearHistory" style="font-size: 0.75rem; color: var(--btn-danger-text);">Clear</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="history-empty">No calculations yet</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay" id="modalSettings">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Settings</h3>
+        <button class="icon-btn modal-close">✕</button>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">Accent Theme</span>
+        <div class="accent-picker">
+          <div class="accent-dot selected" data-accent="ocean" style="background: #38bdf8;" title="Ocean"></div>
+          <div class="accent-dot" data-accent="sunset" style="background: #fb7185;" title="Sunset"></div>
+          <div class="accent-dot" data-accent="forest" style="background: #34d399;" title="Forest"></div>
+          <div class="accent-dot" data-accent="neon" style="background: #c084fc;" title="Neon"></div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">Click Sound Effects</span>
+        <input type="checkbox" id="toggleSound" checked>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">Haptic Vibration (Mobile)</span>
+        <input type="checkbox" id="toggleHaptic" checked>
+      </div>
+    </div>
+  </div>
+
+  <!-- HELP & SHORTCUTS MODAL -->
+  <div class="modal-overlay" id="modalHelp">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Keyboard Shortcuts</h3>
+        <button class="icon-btn modal-close">✕</button>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
+        <div><code>0 - 9</code> Number Keys</div>
+        <div><code>+ - * /</code> Arithmetic</div>
+        <div><code>Enter / =</code> Calculate</div>
+        <div><code>Backspace</code> Delete Last</div>
+        <div><code>Escape</code> Clear All (AC)</div>
+        <div><code>( )</code> Parentheses</div>
+        <div><code>^</code> Exponent (Power)</div>
+        <div><code>!</code> Factorial</div>
+        <div><code>Ctrl + Z</code> Undo</div>
+        <div><code>Ctrl + Y</code> Redo</div>
+        <div><code>?</code> Show Help</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-notification" id="toast">
+    <span>📋</span> <span class="toast-msg">Copied to clipboard</span>
+  </div>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script src="js/calculator.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/converter.js"></script>
+  <script src="js/tests.js"></script>
+  <script src="js/ui.js"></script>
+
+  <!-- PWA SERVICE WORKER REGISTRATION & UNIT TEST INITIALIZER -->
+  <script>
+    // Run automated unit test suite
+    if (typeof CalcProTests !== 'undefined') {
+      CalcProTests.runTests();
+    }
+
+    // Register Service Worker for Offline PWA support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('PWA Service Worker registered:', reg.scope))
+          .catch(err => console.warn('PWA Service Worker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>

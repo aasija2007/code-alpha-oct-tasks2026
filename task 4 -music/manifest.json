@@ -1,0 +1,21 @@
+{
+  "name": "Aurora — Music Player",
+  "short_name": "Aurora Music",
+  "description": "Production-Grade Web Music Player with Audio Visualizer and Equalizer",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0e17",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

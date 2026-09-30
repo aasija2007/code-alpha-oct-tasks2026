@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="aurora">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>Aurora — Streaming Music Player Web App</title>
+  <meta name="title" content="Aurora — Streaming Music Player Web App">
+  <meta name="description" content="A production-grade, Spotify-inspired web music player with multi-language support (Tamil, Hindi, English), Wishlist, dual-language lyrics translation, Web Audio equalizer, custom themes, and canvas visualizer.">
+  
+  <!-- PWA & Favicon -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6366f1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background Glow -->
+  <div id="ambient-backdrop"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <div class="app-wrapper" id="app-container">
+
+    <!-- HEADER NAVBAR -->
+    <header class="app-header">
+      <div class="brand-logo">
+        <div class="brand-icon"><i class="fas fa-compact-disc"></i></div>
+        <span><span data-i18n="appName">Aurora</span> <span style="font-weight: 400; color: var(--accent-primary);" data-i18n="appSub">// Player</span></span>
+      </div>
+
+      <div class="header-controls-group">
+        <!-- Language Switcher Dropdown -->
+        <div class="header-select-wrapper" title="Switch UI Language">
+          <i class="fas fa-globe" style="color: var(--accent-primary);"></i>
+          <select id="header-lang-select" aria-label="Select Language">
+            <option value="en">🇬🇧 English</option>
+            <option value="ta">🇮🇳 தமிழ் (Tamil)</option>
+            <option value="hi">🇮🇳 हिंदी (Hindi)</option>
+            <option value="es">🇪🇸 Español</option>
+          </select>
+        </div>
+
+        <!-- Theme Switcher Dropdown -->
+        <div class="header-select-wrapper" title="Switch Visual Theme">
+          <i class="fas fa-palette" style="color: var(--accent-pink);"></i>
+          <select id="header-theme-select" aria-label="Select Theme">
+            <option value="aurora" data-i18n="themeAurora">Aurora Midnight</option>
+            <option value="cyberpunk" data-i18n="themeCyber">Cyber Neon</option>
+            <option value="gold" data-i18n="themeGold">Tamil Temple Gold</option>
+            <option value="emerald" data-i18n="themeEmerald">Emerald Oasis</option>
+            <option value="ruby" data-i18n="themeRuby">Sunset Ruby</option>
+          </select>
+        </div>
+
+        <!-- Playback Speed Dropdown -->
+        <div class="header-select-wrapper" title="Playback Speed">
+          <i class="fas fa-tachometer-alt" style="color: var(--accent-secondary);"></i>
+          <select id="header-speed-select" aria-label="Select Playback Speed">
+            <option value="0.5">0.5x</option>
+            <option value="1.0" selected>1.0x (Normal)</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2.0">2.0x</option>
+          </select>
+        </div>
+
+        <!-- Sleep Timer Modal Trigger -->
+        <button class="icon-btn" id="btn-sleep-modal" title="Sleep Timer" aria-label="Sleep Timer">
+          <i class="fas fa-moon"></i>
+          <span class="badge-indicator" id="sleep-timer-badge" style="display: none;"></span>
+        </button>
+
+        <!-- Equalizer Modal Trigger -->
+        <button class="icon-btn" id="btn-eq-modal" title="Equalizer & Sound FX" aria-label="Open Equalizer">
+          <i class="fas fa-sliders-h"></i>
+        </button>
+
+        <!-- Keyboard Shortcuts Trigger -->
+        <button class="icon-btn" id="btn-shortcuts-modal" title="Keyboard Shortcuts (?)" aria-label="Keyboard Shortcuts">
+          <i class="fas fa-keyboard"></i>
+        </button>
+
+        <!-- Music Credits Trigger -->
+        <button class="icon-btn" id="btn-credits-modal" title="Music Credits & Licensing" aria-label="Music Credits">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT GRID -->
+    <main class="main-content">
+
+      <!-- LEFT: PLAYER PANEL -->
+      <section class="player-panel">
+        
+        <!-- Spinning Vinyl & Cover Container -->
+        <div class="vinyl-container">
+          <div class="vinyl-disc" id="vinyl-disc"></div>
+          <img src="" alt="Album Cover" class="cover-art-img" id="cover-art-img">
+        </div>
+
+        <!-- Web Audio Canvas Visualizer -->
+        <div class="visualizer-wrapper">
+          <canvas id="visualizer-canvas"></canvas>
+        </div>
+
+        <!-- Visualizer Mode Switcher -->
+        <div class="viz-switcher-bar">
+          <button class="playlist-tab-btn viz-mode-btn active" data-mode="bars">Bars</button>
+          <button class="playlist-tab-btn viz-mode-btn" data-mode="waveform">Waveform</button>
+          <button class="playlist-tab-btn viz-mode-btn" data-mode="circle">Radial</button>
+          <button class="playlist-tab-btn viz-mode-btn" data-mode="neon">Neon</button>
+        </div>
+
+        <!-- Song Metadata Info -->
+        <div class="song-info-group">
+          <h1 class="song-title" id="track-title">Loading Track...</h1>
+          <div class="song-artist" id="track-artist">Artist</div>
+          <div class="song-album">
+            <span id="track-album">Album</span>
+            <span class="lang-badge-pill" id="track-lang-pill">EN</span>
+          </div>
+        </div>
+
+        <!-- Custom Seek Progress Bar -->
+        <div class="progress-container">
+          <div class="progress-bar-track" id="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            <div class="progress-bar-handle" id="progress-bar-handle"></div>
+          </div>
+          <div class="time-stamps">
+            <span id="current-time-text">0:00</span>
+            <span id="total-duration-text">0:00</span>
+          </div>
+        </div>
+
+        <!-- Player Audio Controls -->
+        <div class="controls-row">
+          <button class="icon-btn" id="btn-shuffle" title="Shuffle (S)" aria-label="Toggle Shuffle">
+            <i class="fas fa-random"></i>
+          </button>
+          <button class="icon-btn" id="btn-prev" title="Previous (P)" aria-label="Previous Track">
+            <i class="fas fa-step-backward"></i>
+          </button>
+          <button class="btn-play-pause" id="btn-play-pause" title="Play/Pause (Space)" aria-label="Play Music">
+            <i class="fas fa-play"></i>
+          </button>
+          <button class="icon-btn" id="btn-next" title="Next (N)" aria-label="Next Track">
+            <i class="fas fa-step-forward"></i>
+          </button>
+          <button class="icon-btn" id="btn-repeat" title="Repeat Mode (R)" aria-label="Toggle Repeat">
+            <i class="fas fa-redo"></i>
+            <span class="badge-indicator"></span>
+          </button>
+          <button class="icon-btn" id="btn-wishlist" title="Add to Wishlist (W)" aria-label="Wishlist Track">
+            <i class="far fa-bookmark"></i>
+          </button>
+          <button class="icon-btn" id="btn-like" title="Like Track (L)" aria-label="Favorite Track">
+            <i class="far fa-heart"></i>
+          </button>
+        </div>
+
+        <!-- Volume Bar -->
+        <div class="volume-group">
+          <button class="icon-btn" id="btn-mute" style="width: 34px; height: 34px; font-size: 0.85rem;" title="Mute (M)" aria-label="Toggle Mute">
+            <i class="fas fa-volume-up" id="volume-icon"></i>
+          </button>
+          <div class="volume-slider-wrapper">
+            <div class="progress-bar-fill" id="volume-fill" style="width: 80%;"></div>
+            <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="80" aria-label="Volume Slider">
+          </div>
+        </div>
+
+        <!-- Synced & Translated Lyrics Panel -->
+        <div class="lyrics-panel">
+          <div class="lyrics-header-row">
+            <span class="lyrics-title-text"><i class="fas fa-language"></i> <span data-i18n="lyricsHeader">Synced Lyrics</span></span>
+            <select class="lyric-mode-select" id="lyric-mode-select" title="Lyric Translation Mode">
+              <option value="dual" data-i18n="lyricModeDual">Dual Subtitles</option>
+              <option value="original" data-i18n="lyricModeOriginal">Original Script</option>
+              <option value="trans" data-i18n="lyricModeTrans">Translation</option>
+            </select>
+          </div>
+          <div id="lyrics-container">
+            <!-- Lyrics rendered dynamically with dual language support -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT: PLAYLIST & QUEUE PANEL -->
+      <aside class="playlist-panel">
+        <div class="playlist-header">
+          <div class="playlist-title-row">
+            <div class="playlist-title"><i class="fas fa-list-ul"></i> Playlist & Library</div>
+            <button class="btn-create-playlist" id="btn-create-playlist-modal" data-i18n="createPlaylistBtn">+ Create Playlist</button>
+          </div>
+          
+          <!-- Search & Sort Controls -->
+          <div class="playlist-filter-bar">
+            <input type="text" class="playlist-search-input" id="playlist-search-input" placeholder="Search title, artist, genre...">
+            <select class="playlist-sort-select" id="playlist-sort-select">
+              <option value="default" data-i18n="sortDefault">Sort: Default</option>
+              <option value="title-asc" data-i18n="sortTitle">Title (A-Z)</option>
+              <option value="artist-asc" data-i18n="sortArtist">Artist (A-Z)</option>
+              <option value="duration-asc" data-i18n="sortDuration">Duration (Shortest)</option>
+            </select>
+          </div>
+
+          <!-- Language & Wishlist Category Filter Tabs -->
+          <div class="playlist-tabs">
+            <button class="playlist-tab-btn active" data-category="all" data-i18n="tabAll">All Tracks</button>
+            <button class="playlist-tab-btn" data-category="wishlist" data-i18n="tabWishlist">Wishlist 📌</button>
+            <button class="playlist-tab-btn" data-category="ta" data-i18n="tabTamil">Tamil 🇮🇳</button>
+            <button class="playlist-tab-btn" data-category="hi" data-i18n="tabHindi">Hindi 🇮🇳</button>
+            <button class="playlist-tab-btn" data-category="en" data-i18n="tabEnglish">English 🇬🇧</button>
+            <button class="playlist-tab-btn" data-category="liked" data-i18n="tabLiked">Liked Songs 💖</button>
+          </div>
+        </div>
+
+        <!-- Playlist Items Container -->
+        <div class="playlist-items-container" id="playlist-items-container">
+          <!-- Rendered dynamically via js/ui.js -->
+        </div>
+
+        <div style="margin-top: 16px; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
+          <i class="fas fa-cloud-upload-alt"></i> <span data-i18n="dragDropHint">Drag & Drop local MP3 files here to add to playlist</span>
+        </div>
+      </aside>
+
+    </main>
+
+  </div>
+
+  <!-- CREATE PLAYLIST MODAL -->
+  <div class="modal-overlay" id="create-playlist-modal" aria-hidden="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-folder-plus text-gradient"></i> Create New Playlist</h3>
+        <button class="icon-btn close-modal-btn" data-modal="create-playlist-modal" aria-label="Close Playlist Modal"><i class="fas fa-times"></i></button>
+      </div>
+
+      <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.9rem;">Enter a name for your custom playlist:</p>
+      
+      <input type="text" id="input-playlist-name" class="modal-input-field" placeholder="Playlist Name (e.g. Chill Vibes, Tamil Melodies)..." maxlength="40">
+      
+      <button class="btn-create-playlist" id="btn-confirm-create-playlist" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.95rem;">
+        <i class="fas fa-check"></i> Create Playlist
+      </button>
+    </div>
+  </div>
+
+  <!-- SLEEP TIMER MODAL -->
+  <div class="modal-overlay" id="sleep-modal" aria-hidden="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-moon text-gradient"></i> <span data-i18n="sleepTimerTitle">Sleep Timer</span></h3>
+        <button class="icon-btn close-modal-btn" data-modal="sleep-modal" aria-label="Close Sleep Timer"><i class="fas fa-times"></i></button>
+      </div>
+
+      <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">Set a timer to automatically fade out and stop music playback.</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <button class="timer-preset-btn" data-mins="15" data-i18n="sleepTimer15">15 Minutes</button>
+        <button class="timer-preset-btn" data-mins="30" data-i18n="sleepTimer30">30 Minutes</button>
+        <button class="timer-preset-btn" data-mins="45" data-i18n="sleepTimer45">45 Minutes</button>
+        <button class="timer-preset-btn" data-mins="60" data-i18n="sleepTimer60">60 Minutes</button>
+        <button class="timer-preset-btn" data-mins="0" style="grid-column: span 2; border-color: var(--accent-pink); color: var(--accent-pink);" data-i18n="sleepTimerOff">Turn Off Timer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUALIZER MODAL -->
+  <div class="modal-overlay" id="eq-modal" aria-hidden="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-sliders-h text-gradient"></i> <span data-i18n="equalizerTitle">3-Band Audio Equalizer</span></h3>
+        <button class="icon-btn close-modal-btn" data-modal="eq-modal" aria-label="Close Equalizer"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label style="font-size: 0.9rem; color: var(--text-secondary); display: block; margin-bottom: 8px;" data-i18n="eqPresetLabel">Equalizer Preset:</label>
+        <select class="playlist-sort-select" id="eq-preset-select" style="width: 100%;">
+          <option value="Flat" data-i18n="presetFlat">Flat (Default)</option>
+          <option value="Bass Boost" data-i18n="presetBass">Bass Boost</option>
+          <option value="Vocal Boost" data-i18n="presetVocal">Vocal Boost</option>
+          <option value="Treble Boost" data-i18n="presetTreble">Treble Boost</option>
+          <option value="Pop" data-i18n="presetPop">Pop</option>
+          <option value="Rock" data-i18n="presetRock">Rock</option>
+          <option value="Electronic" data-i18n="presetElectro">Electronic</option>
+        </select>
+      </div>
+
+      <div class="eq-slider-group">
+        <div class="eq-slider-item">
+          <input type="range" class="eq-vertical-slider" id="eq-bass-slider" min="-12" max="12" value="0">
+          <span style="font-weight: 600; font-size: 0.85rem;" data-i18n="eqBass">Bass</span>
+        </div>
+        <div class="eq-slider-item">
+          <input type="range" class="eq-vertical-slider" id="eq-mid-slider" min="-12" max="12" value="0">
+          <span style="font-weight: 600; font-size: 0.85rem;" data-i18n="eqMid">Mid</span>
+        </div>
+        <div class="eq-slider-item">
+          <input type="range" class="eq-vertical-slider" id="eq-treble-slider" min="-12" max="12" value="0">
+          <span style="font-weight: 600; font-size: 0.85rem;" data-i18n="eqTreble">Treble</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEYBOARD SHORTCUTS MODAL -->
+  <div class="modal-overlay" id="shortcuts-modal" aria-hidden="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-keyboard text-gradient"></i> <span data-i18n="shortcutsTitle">Keyboard Shortcuts</span></h3>
+        <button class="icon-btn close-modal-btn" data-modal="shortcuts-modal" aria-label="Close Shortcuts"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.9rem;">
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">Space</kbd> Play / Pause</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">N</kbd> Next Track</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">P</kbd> Previous Track</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">W</kbd> Add to Wishlist</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">L</kbd> Like / Favorite</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">M</kbd> Mute Volume</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">S</kbd> Toggle Shuffle</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">R</kbd> Toggle Repeat</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">T</kbd> Cycle Themes</div>
+        <div><kbd class="cmd-key-badge" style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">G</kbd> Cycle Language</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREDITS MODAL -->
+  <div class="modal-overlay" id="credits-modal" aria-hidden="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-info-circle text-gradient"></i> <span data-i18n="creditsTitle">Music Credits & License</span></h3>
+        <button class="icon-btn close-modal-btn" data-modal="credits-modal" aria-label="Close Credits"><i class="fas fa-times"></i></button>
+      </div>
+
+      <p style="color: var(--text-secondary); margin-bottom: 16px;" data-i18n="creditsText">All audio tracks in Aurora are royalty-free under Creative Commons or Pixabay Music licenses with dynamic Web Audio synthesis fallback.</p>
+      
+      <ul style="padding-left: 20px; color: var(--text-secondary); font-size: 0.9rem;">
+        <li style="margin-bottom: 8px;"><strong>Pixabay Music:</strong> Royalty-free audio streams.</li>
+        <li style="margin-bottom: 8px;"><strong>Web Audio API Synthesizer:</strong> Real-time zero-latency synth sound engine.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- JavaScript Files -->
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/visualizer.js"></script>
+  <script src="js/playlist.js"></script>
+  <script src="js/ui.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.auroraUI = new UIController();
+
+      // Modal Triggers
+      document.getElementById('btn-eq-modal').addEventListener('click', () => {
+        document.getElementById('eq-modal').classList.add('active');
+      });
+      document.getElementById('btn-shortcuts-modal').addEventListener('click', () => {
+        document.getElementById('shortcuts-modal').classList.add('active');
+      });
+      document.getElementById('btn-credits-modal').addEventListener('click', () => {
+        document.getElementById('credits-modal').classList.add('active');
+      });
+
+      document.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const modalId = btn.getAttribute('data-modal');
+          if (modalId) document.getElementById(modalId).classList.remove('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

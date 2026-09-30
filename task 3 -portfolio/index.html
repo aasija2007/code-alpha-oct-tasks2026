@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>Aasija | Computer Science Student & Frontend Engineer Portfolio</title>
+  <meta name="title" content="Aasija | Computer Science Student & Frontend Engineer Portfolio">
+  <meta name="description" content="Personal portfolio of Aasija, a final-year Computer Science & Engineering student specializing in Frontend Engineering, UI/UX Design, and modern web application development. Available for hire and internships.">
+  <meta name="keywords" content="Aasija, Frontend Developer, UI Engineer, Computer Science Student, Web Developer Portfolio, CodeAlpha Internship, HTML5, CSS3, JavaScript, React, Web Accessibility">
+  <meta name="author" content="Aasija">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aasija2007.github.io/portfolio/">
+  <meta property="og:title" content="Aasija | Computer Science Student & Frontend Engineer">
+  <meta property="og:description" content="Explore Aasija's personal portfolio featuring responsive web projects, UI design systems, CodeAlpha tasks, and engineering achievements. Available for hire.">
+  <meta property="og:image" content="https://aasija2007.github.io/portfolio/assets/profile.jpg">
+
+  <!-- Twitter Meta Tags -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://aasija2007.github.io/portfolio/">
+  <meta property="twitter:title" content="Aasija | Computer Science Student & Frontend Engineer">
+  <meta property="twitter:description" content="Explore Aasija's personal portfolio featuring responsive web projects, UI design systems, CodeAlpha tasks, and engineering achievements. Available for hire.">
+  <meta property="twitter:image" content="https://aasija2007.github.io/portfolio/assets/profile.jpg">
+
+  <!-- Web App Manifest & Favicon -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6366f1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Preconnect & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- JSON-LD Person Schema for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aasija",
+    "jobTitle": "Frontend Developer & Computer Science Student",
+    "url": "https://aasija2007.github.io/portfolio/",
+    "sameAs": [
+      "https://github.com/aasija2007",
+      "https://www.linkedin.com/in/aasija-k-9b5b05386/"
+    ],
+    "knowsAbout": ["Frontend Development", "JavaScript", "HTML5", "CSS3", "UI/UX Engineering", "Web Performance"]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Custom Pointer Cursor (Desktop Only) -->
+  <div class="custom-cursor-dot" aria-hidden="true"></div>
+  <div class="custom-cursor-ring" aria-hidden="true"></div>
+
+  <!-- Page Preloader -->
+  <div id="preloader" aria-label="Loading Page">
+    <div class="loader-logo">AASIJA <span class="text-gradient">// DEV</span></div>
+    <div class="loader-bar">
+      <div class="loader-progress"></div>
+    </div>
+  </div>
+
+  <!-- Top Scroll Progress Bar -->
+  <div class="scroll-progress-container" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar-container">
+      <a href="#hero" class="nav-brand" aria-label="Aasija Home">
+        <span class="nav-brand-dot"></span>
+        <span>Aasija</span>
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#resume" class="nav-link">Resume</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="cmd-palette-btn" id="cmd-palette-btn" aria-label="Open Command Palette (Ctrl+K)">
+          <i class="fas fa-terminal"></i>
+          <span>Cmd</span>
+          <span class="cmd-key-badge">Ctrl+K</span>
+        </button>
+
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">
+          <i class="fas fa-sun"></i>
+        </button>
+
+        <button class="hamburger" id="hamburger-btn" aria-label="Toggle Menu" aria-expanded="false">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-nav-backdrop" id="mobile-backdrop"></div>
+  <aside class="mobile-nav-drawer" id="mobile-drawer" aria-label="Mobile Navigation">
+    <ul class="mobile-nav-links">
+      <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+      <li><a href="#about" class="mobile-nav-link">About</a></li>
+      <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+      <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+      <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
+      <li><a href="#services" class="mobile-nav-link">Services</a></li>
+      <li><a href="#resume" class="mobile-nav-link">Resume</a></li>
+      <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+    </ul>
+    <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+      © 2026 Aasija. Built with HTML, CSS & Vanilla JS.
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+
+    <!-- 1. HERO SECTION -->
+    <section class="hero" id="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-text-content">
+            <div class="hero-badge">
+              <span class="pulsing-dot"></span>
+              <span>Available for Web Design & UI/UX Internships</span>
+            </div>
+            
+            <h1 class="hero-title">
+              Hi, I'm <span class="text-gradient">Aasija K</span>.<br>
+              <span class="hero-typing-wrapper" id="typing-role">Web Design & UI/UX Intern Aspirant</span>
+            </h1>
+
+            <p class="hero-subtitle">
+              Motivated and detail-oriented student specializing in Web Design, UI/UX Design, Wireframing, and Front-End Coding with user-centered design principles.
+            </p>
+
+            <div class="hero-ctas">
+              <a href="#projects" class="btn btn-primary">
+                <i class="fas fa-briefcase"></i> View Projects
+              </a>
+              <a href="#resume" class="btn btn-secondary" id="download-resume-btn">
+                <i class="fas fa-file-pdf"></i> Download Resume
+              </a>
+              <a href="#contact" class="btn btn-outline">
+                <i class="fas fa-paper-plane"></i> Contact Me
+              </a>
+            </div>
+
+            <div class="hero-socials">
+              <a href="https://github.com/aasija2007" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub Profile">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/aasija-k-9b5b05386/" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="LinkedIn Profile">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="mailto:aasija2007@gmail.com" class="social-icon-btn" aria-label="Email Aasija">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Hero Visual / Profile Image Frame -->
+          <div class="hero-visual">
+            <div class="profile-card-wrapper">
+              <div class="profile-glow-ring"></div>
+              <div class="profile-card-inner">
+                <!-- Professional Profile Picture -->
+                <img src="assets/profile.jpg" alt="Aasija - Professional Profile Picture" class="profile-avatar-img">
+              </div>
+
+              <!-- Floating Tech Badges -->
+              <div class="floating-badge floating-badge-1">
+                <i class="fas fa-drafting-compass" style="color: #6366f1; font-size: 1.2rem;"></i>
+                <span>UI/UX & Wireframes</span>
+              </div>
+              <div class="floating-badge floating-badge-2">
+                <i class="fab fa-html5" style="color: #e34f26; font-size: 1.2rem;"></i>
+                <span>Front-End Coding</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT SECTION -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-user"></i> About Me</span>
+          <h2 class="section-title">User-Centered Web Design & UI/UX Excellence</h2>
+          <p class="section-description">Combining wireframe creation, design thinking, and front-end coding for intuitive digital experiences.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-text-column">
+            <p class="about-bio">
+              I am a motivated and detail-oriented student with a strong foundation in web design, UI/UX design, and front-end development. I am proficient in wireframe creation, design thinking, and user-centered design principles.
+            </p>
+            <p class="about-bio">
+              Certified in UI/UX Design, Microsoft technologies (3 Certifications), and Anthropic Claude (13 Certificates), with hands-on experience through academic projects like the Smart India Hackathon (SIH). Eager to apply creative and technical skills in a professional internship environment.
+            </p>
+            
+            <div style="margin-top: 16px; margin-bottom: 24px; padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md); border: 1px solid var(--border-medium);">
+              <h4 style="margin-bottom: 8px; font-size: 0.95rem; color: var(--accent-primary);"><i class="fas fa-language"></i> Languages Known</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                <strong>English</strong> (Fluent) • <strong>Tamil</strong> (Native) • <strong>Kannada</strong> (Proficient)
+              </p>
+            </div>
+
+            <div class="quick-facts-grid" id="quick-facts-container">
+              <!-- Dynamically rendered via data.js -->
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number" id="stat-projects">0</div>
+              <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="stat-tech">0</div>
+              <div class="stat-label">Tech & Tools Mastered</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="stat-internships">0</div>
+              <div class="stat-label">Internships / Roles</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="stat-commits">0</div>
+              <div class="stat-label">Code Commits</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SKILLS SECTION -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-cogs"></i> Skills & Expertise</span>
+          <h2 class="section-title">Technical Proficiency & Stack</h2>
+          <p class="section-description">A breakdown of my technical capabilities, languages, and professional tools.</p>
+        </div>
+
+        <div class="skills-tab-nav">
+          <button class="tab-btn active" data-category="frontend"><i class="fab fa-html5"></i> Frontend</button>
+          <button class="tab-btn" data-category="backend"><i class="fas fa-server"></i> Backend & DB</button>
+          <button class="tab-btn" data-category="tools"><i class="fas fa-tools"></i> Tools & Workflow</button>
+          <button class="tab-btn" data-category="softSkills"><i class="fas fa-brain"></i> Soft Skills</button>
+        </div>
+
+        <div class="skills-grid" id="skills-container">
+          <!-- Rendered dynamically from data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PROJECTS SECTION -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-folder-open"></i> Portfolio</span>
+          <h2 class="section-title">Featured Projects & Case Studies</h2>
+          <p class="section-description">Including CodeAlpha Internship tasks, full-stack applications, and hackathon submissions.</p>
+        </div>
+
+        <div class="projects-filter-nav">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="web">Web Development</button>
+          <button class="filter-btn" data-filter="full-stack">Full-Stack</button>
+          <button class="filter-btn" data-filter="hackathon">Hackathon</button>
+        </div>
+
+        <div class="projects-grid" id="projects-container">
+          <!-- Rendered dynamically from data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. EXPERIENCE & EDUCATION TIMELINE -->
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-graduation-cap"></i> Journey</span>
+          <h2 class="section-title">Experience & Academic Background</h2>
+          <p class="section-description">My professional internships and computer science educational milestones.</p>
+        </div>
+
+        <div class="timeline-container" id="timeline-container">
+          <!-- Rendered dynamically from data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SERVICES SECTION -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-handshake"></i> What I Offer</span>
+          <h2 class="section-title">Services & Solutions for Recruiters & Clients</h2>
+          <p class="section-description">Here is how I can bring value to your engineering team or organization.</p>
+        </div>
+
+        <div class="services-grid" id="services-container">
+          <!-- Rendered dynamically from data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. TESTIMONIALS CAROUSEL -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-comment-dots"></i> Feedback</span>
+          <h2 class="section-title">Recommendations & Testimonials</h2>
+          <p class="section-description">What mentors, peers, and clients say about working with me.</p>
+        </div>
+
+        <div class="testimonials-carousel">
+          <div id="testimonials-container">
+            <!-- Rendered dynamically from data.js -->
+          </div>
+          <div class="carousel-controls" id="testimonial-dots">
+            <!-- Dots rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. RESUME SECTION -->
+    <section class="section" id="resume">
+      <div class="container">
+        <div class="resume-box">
+          <div class="resume-info">
+            <h3><i class="fas fa-file-alt text-gradient"></i> Curriculum Vitae</h3>
+            <p>Download my updated 1-page resume or view the printable format online.</p>
+          </div>
+          <div class="resume-actions">
+            <a href="assets/Aasija_Resume.pdf" download="Aasija_Frontend_Developer_Resume.pdf" class="btn btn-primary">
+              <i class="fas fa-download"></i> Download PDF
+            </a>
+            <button onclick="window.print()" class="btn btn-secondary">
+              <i class="fas fa-print"></i> Print One-Page Resume
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. CONTACT SECTION -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-envelope"></i> Get In Touch</span>
+          <h2 class="section-title">Let's Build Something Great Together</h2>
+          <p class="section-description">Have a full-time role, internship, or project opportunity? Send me a message!</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info-cards">
+            <div class="contact-card">
+              <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+              <div class="contact-details">
+                <h4>Direct Email</h4>
+                <p id="contact-email-text">aasija2007@gmail.com</p>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+              <div class="contact-details">
+                <h4>Phone / WhatsApp</h4>
+                <p id="contact-phone-text">+91 9150683866</p>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div class="contact-details">
+                <h4>Location</h4>
+                <p id="contact-location-text">India (Open to Remote)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrapper">
+            <form class="contact-form" id="contact-form" novalidate>
+              <div class="form-alert" id="form-alert"></div>
+
+              <div class="form-group">
+                <label for="contact-name" class="form-label">Full Name *</label>
+                <input type="text" id="contact-name" class="form-control" placeholder="e.g. Sarah Jenkins" required>
+                <span class="form-error-text">Please enter your full name.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email" class="form-label">Email Address *</label>
+                <input type="email" id="contact-email" class="form-control" placeholder="e.g. sarah@company.com" required>
+                <span class="form-error-text">Please enter a valid email address.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-subject" class="form-label">Subject</label>
+                <input type="text" id="contact-subject" class="form-control" placeholder="e.g. Frontend Internship Opportunity">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message" class="form-label">Message *</label>
+                <textarea id="contact-message" rows="5" class="form-control" placeholder="Tell me about your project or role details..." required></textarea>
+                <span class="form-error-text">Message must be at least 10 characters long.</span>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-paper-plane"></i> Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- GitHub Live Repos Showcase -->
+        <div class="github-stats-container">
+          <h3><i class="fab fa-github"></i> Live GitHub Repositories</h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">Fetched live via the official GitHub REST API</p>
+          <div class="github-repos-grid" id="github-repos-grid">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a href="#hero" class="nav-brand">
+          <span class="nav-brand-dot"></span>
+          <span>Aasija</span>
+        </a>
+
+        <div class="footer-copy">
+          Designed & Built with <i class="fas fa-heart" style="color: var(--accent-tertiary);"></i> by <strong>Aasija</strong> © 2026.
+        </div>
+
+        <div class="hero-socials">
+          <a href="https://github.com/aasija2007" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/aasija-k-9b5b05386/" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="mailto:aasija2007@gmail.com" class="social-icon-btn" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back To Top Floating Button -->
+  <button class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Project Details Modal Overlay -->
+  <div class="modal-overlay" id="project-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-project-title">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-project-title">Project Details</h3>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-project-body">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette Modal Overlay -->
+  <div class="modal-overlay" id="cmd-palette-modal" aria-hidden="true" role="dialog" aria-label="Command Palette">
+    <div class="modal-container cmd-modal-container">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid var(--border-light);">
+        <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted);"><i class="fas fa-terminal"></i> Quick Command Palette</span>
+        <button class="modal-close-btn" id="cmd-close-btn" style="width: 28px; height: 28px; font-size: 0.8rem;" aria-label="Close palette">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <input type="text" class="cmd-search-input" id="cmd-search-input" placeholder="Type a command or search section (e.g. Projects, Skills, Contact)..." autocomplete="off">
+      <ul class="cmd-results-list" id="cmd-results-list">
+        <!-- Commands list -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Developer Console Easter Egg -->
+  <script>
+    console.log("%c⚡ Hello Developer! Welcome to Aasija's Portfolio Code ⚡", "color: #6366f1; font-size: 16px; font-weight: bold;");
+    console.log("%cLooking for clean code, performance, or custom UI engineering? Let's connect!", "color: #10b981; font-size: 12px;");
+  </script>
+
+  <!-- JavaScript Files -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
